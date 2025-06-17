@@ -11,44 +11,129 @@ Methods forward/backward increase/decrease location.
 If maximum location is reached, forward/backward methods wrap location.
 */
 public class PointSpec {
+    @Test
+    public void shouldRetainLocationFromConstructor() {
+        //Arrange
+        int location = 5;
+        int maxLocation = 9;
 
-    Point point;
-    private final int location = 5;
-    private final int maxLocation = 9;
+        //Act
+        Point point = new Point(location, maxLocation);
 
-    @Before
-    public void beforePointTest() {
-        point = new Point(location, maxLocation);
+        //Assert
+        assertThat(point.getLocation()).isEqualTo(location);
     }
 
     @Test
-    public void newInstanceShouldSetLocationAndMaxLocationParams() {
-        assertThat(point.getLocation()).isEqualTo(location);
+    public void shouldRetainMaxLocationFromConstructor() {
+        //Arrange
+        int location = 5;
+        int maxLocation = 9;
+
+        //Act
+        Point point = new Point(location, maxLocation);
+
+        //Assert
         assertThat(point.getMaxLocation()).isEqualTo(maxLocation);
     }
 
     @Test
-    public void getForwardLocationShouldIncreasePointValueByOne() {
-        int expected = point.getLocation() + 1;
-        assertThat(point.getForwardLocation()).isEqualTo(expected);
+    public void shouldReturnLocationPlusOneForForwardLocation() {
+        //Arrange
+        Point point = pointAt(5, 9);
+
+        //Act
+        int forwardLocation = point.getForwardLocation();
+
+        //Assert
+        assertThat(forwardLocation).isEqualTo(6);
     }
 
     @Test
-    public void getBackwardLocationShouldDecreasePointValueByOne() {
-        int expected = point.getLocation() - 1;
-        assertThat(point.getBackwardLocation()).isEqualTo(expected);
+    public void shouldReturnLocationMinusOneForBackwardLocation() {
+        //Arrange
+        Point point = pointAt(5, 9);
+
+        //Act
+        int backwardLocation = point.getBackwardLocation();
+
+        //Assert
+        assertThat(backwardLocation).isEqualTo(4);
     }
 
     @Test
-    public void getForwardLocationShouldSetValueToZeroIfMaxLocationIsPassed() {
-        point.setLocation(point.getMaxLocation());
-        assertThat(point.getForwardLocation()).isZero();
+    public void shouldWrapToZeroWhenForwardLocationExceedsMaxLocation() {
+        //Arrange
+        Point point = pointAt(9, 9);
+
+        //Act
+        int forwardLocation = point.getForwardLocation();
+
+        //Assert
+        assertThat(forwardLocation).isZero();
     }
 
     @Test
-    public void getBackwardLocationShouldSetValueToMaxLocationIfZeroLocationIsPassed() {
-        point.setLocation(0);
-        assertThat(point.getBackwardLocation()).isEqualTo(point.getMaxLocation());
+    public void shouldWrapToMaxLocationWhenBackwardLocationGoesBeforeZero() {
+        //Arrange
+        Point point = pointAt(0, 9);
+
+        //Act
+        int backwardLocation = point.getBackwardLocation();
+
+        //Assert
+        assertThat(backwardLocation).isEqualTo(9);
     }
 
+    @Test
+    public void shouldNotChangeLocationWhenGettingForwardLocation() {
+        //Arrange
+        Point point = pointAt(5, 9);
+
+        //Act
+        point.getForwardLocation();
+
+        //Assert
+        assertThat(point.getLocation()).isEqualTo(5);
+    }
+
+    @Test
+    public void shouldNotChangeLocationWhenGettingBackwardLocation() {
+        //Arrange
+        Point point = pointAt(5, 9);
+
+        //Act
+        point.getBackwardLocation();
+
+        //Assert
+        assertThat(point.getLocation()).isEqualTo(5);
+    }
+
+    @Test
+    public void shouldAllowLocationToBeChanged() {
+        //Arrange
+        Point point = pointAt(5, 9);
+
+        //Act
+        point.setLocation(7);
+
+        //Assert
+        assertThat(point.getLocation()).isEqualTo(7);
+    }
+
+    @Test
+    public void shouldAllowMaxLocationToBeChanged() {
+        //Arrange
+        Point point = pointAt(5, 9);
+
+        //Act
+        point.setMaxLocation(15);
+
+        //Assert
+        assertThat(point.getMaxLocation()).isEqualTo(15);
+    }
+
+    private Point pointAt(int location, int maxLocation) {
+        return new Point(location, maxLocation);
+    }
 }

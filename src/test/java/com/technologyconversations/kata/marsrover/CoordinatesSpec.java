@@ -1,122 +1,246 @@
 package com.technologyconversations.kata.marsrover;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CoordinatesSpec {
 
-    private Coordinates coordinates;
-    private Point x;
-    private Point y;
-    private List<Obstacle> obstacles;
-    private final Direction direction = Direction.NORTH;
+    @Test
+    public void shouldRetainXFromConstructor() {
+        //Arrange
+        Point x = new Point(1, 99);
+        Point y = new Point(2, 99);
+        Direction direction = Direction.NORTH;
+        List<Obstacle> obstacles = Arrays.asList(new Obstacle(20, 20));
 
-    @Before
-    public void beforeCoordinatesTest() {
-        x = new Point(1, 99);
-        y = new Point(2, 99);
-        obstacles = Arrays.asList(new Obstacle(20, 20), new Obstacle(30, 30));
-        coordinates = new Coordinates(x, y, direction, obstacles);
+        //Act
+        Coordinates coordinates = new Coordinates(x, y, direction, obstacles);
+
+        //Assert
+        assertThat(coordinates.getX()).isEqualTo(x);
     }
 
     @Test
-    public void newInstanceShouldSetXAndYParams() {
-        assertThat(coordinates.getX()).isEqualToComparingFieldByField(x);
-        assertThat(coordinates.getY()).isEqualToComparingFieldByField(y);
+    public void shouldRetainYFromConstructor() {
+        //Arrange
+        Point x = new Point(1, 99);
+        Point y = new Point(2, 99);
+        Direction direction = Direction.NORTH;
+        List<Obstacle> obstacles = Arrays.asList(new Obstacle(20, 20));
+
+        //Act
+        Coordinates coordinates = new Coordinates(x, y, direction, obstacles);
+
+        //Assert
+        assertThat(coordinates.getY()).isEqualTo(y);
     }
 
     @Test
-    public void newInstanceShouldSetDirection() {
+    public void shouldRetainDirectionFromConstructor() {
+        //Arrange
+        Point x = new Point(1, 99);
+        Point y = new Point(2, 99);
+        Direction direction = Direction.NORTH;
+        List<Obstacle> obstacles = Arrays.asList(new Obstacle(20, 20));
+
+        //Act
+        Coordinates coordinates = new Coordinates(x, y, direction, obstacles);
+
+        //Assert
         assertThat(coordinates.getDirection()).isEqualTo(direction);
     }
 
     @Test
-    public void newInstanceShouldSetObstacles() {
+    public void shouldRetainObstaclesFromConstructor() {
+        //Arrange
+        Point x = new Point(1, 99);
+        Point y = new Point(2, 99);
+        Direction direction = Direction.NORTH;
+        List<Obstacle> obstacles = Arrays.asList(new Obstacle(20, 20));
+
+        //Act
+        Coordinates coordinates = new Coordinates(x, y, direction, obstacles);
+
+        //Assert
         assertThat(coordinates.getObstacles()).hasSameElementsAs(obstacles);
     }
 
     @Test
-    public void moveForwardShouldIncreaseYWhenDirectionIsNorth() {
-        Point expected = new Point(y.getLocation() + 1, y.getMaxLocation());
-        coordinates.setDirection(Direction.NORTH);
+    public void shouldIncreaseYLocationWhenMovingForwardNorth() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.NORTH);
+
+        //Act
         coordinates.moveForward();
-        assertThat(coordinates.getY()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getY().getLocation()).isEqualTo(6);
     }
 
     @Test
-    public void moveForwardShouldIncreaseXWhenDirectionIsEast() {
-        Point expected = new Point(x.getLocation() + 1, x.getMaxLocation());
-        coordinates.setDirection(Direction.EAST);
+    public void shouldIncreaseXLocationWhenMovingForwardEast() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.EAST);
+
+        //Act
         coordinates.moveForward();
-        assertThat(coordinates.getX()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getX().getLocation()).isEqualTo(6);
     }
 
     @Test
-    public void moveForwardShouldDecreaseYWhenDirectionIsSouth() {
-        Point expected = new Point(y.getLocation() - 1, y.getMaxLocation());
-        coordinates.setDirection(Direction.SOUTH);
+    public void shouldDecreaseYLocationWhenMovingForwardSouth() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.SOUTH);
+
+        //Act
         coordinates.moveForward();
-        assertThat(coordinates.getY()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getY().getLocation()).isEqualTo(4);
     }
 
     @Test
-    public void moveForwardShouldDecreaseXWhenDirectionIsWest() {
-        Point expected = new Point(x.getLocation() - 1, x.getMaxLocation());
-        coordinates.setDirection(Direction.WEST);
+    public void shouldDecreaseXLocationWhenMovingForwardWest() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.WEST);
+
+        //Act
         coordinates.moveForward();
-        assertThat(coordinates.getX()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getX().getLocation()).isEqualTo(4);
     }
 
     @Test
-    public void moveForwardShouldNotChangeLocationsWhenObstacleIsFound() {
-        int expected = x.getLocation();
-        coordinates.setDirection(Direction.EAST);
-        coordinates.setObstacles(Arrays.asList(new Obstacle(x.getLocation() + 1, y.getLocation())));
-        coordinates.move(coordinates.getDirection());
-        assertThat(coordinates.getX().getLocation()).isEqualTo(expected);
-    }
+    public void shouldDecreaseYLocationWhenMovingBackwardFromNorth() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.NORTH);
 
-    @Test
-    public void moveBackwardShouldDecreaseYWhenDirectionIsNorth() {
-        Point expected = new Point(y.getLocation() - 1, y.getMaxLocation());
-        coordinates.setDirection(Direction.NORTH);
+        //Act
         coordinates.moveBackward();
-        assertThat(coordinates.getY()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getY().getLocation()).isEqualTo(4);
     }
 
     @Test
-    public void moveBackwardShouldDecreaseXWhenDirectionIsEast() {
-        Point expected = new Point(x.getLocation() - 1, x.getMaxLocation());
-        coordinates.setDirection(Direction.EAST);
+    public void shouldDecreaseXLocationWhenMovingBackwardFromEast() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.EAST);
+
+        //Act
         coordinates.moveBackward();
-        assertThat(coordinates.getX()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getX().getLocation()).isEqualTo(4);
     }
 
     @Test
-    public void moveBackwardShouldIncreaseYWhenDirectionIsSouth() {
-        Point expected = new Point(y.getLocation() + 1, y.getMaxLocation());
-        coordinates.setDirection(Direction.SOUTH);
+    public void shouldIncreaseYLocationWhenMovingBackwardFromSouth() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.SOUTH);
+
+        //Act
         coordinates.moveBackward();
-        assertThat(coordinates.getY()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getY().getLocation()).isEqualTo(6);
     }
 
     @Test
-    public void moveBackwardShouldIncreaseXWhenDirectionIsWest() {
-        Point expected = new Point(x.getLocation() + 1, x.getMaxLocation());
-        coordinates.setDirection(Direction.WEST);
+    public void shouldIncreaseXLocationWhenMovingBackwardFromWest() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.WEST);
+
+        //Act
         coordinates.moveBackward();
-        assertThat(coordinates.getX()).isEqualToComparingFieldByField(expected);
+
+        //Assert
+        assertThat(coordinates.getX().getLocation()).isEqualTo(6);
     }
 
     @Test
-    public void toStringShouldReturnXAndY() {
-        String expected = x.getLocation() + " X " + y.getLocation() + " " + direction.getShortName();
-        assertThat(coordinates.toString()).isEqualTo(expected);
+    public void shouldNotChangeXLocationWhenForwardMovementIsBlockedByObstacle() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.EAST,
+                new Obstacle(6, 5));
+
+        //Act
+        coordinates.moveForward();
+
+        //Assert
+        assertThat(coordinates.getX().getLocation()).isEqualTo(5);
     }
 
+    @Test
+    public void shouldNotChangeYLocationWhenForwardMovementIsBlockedByObstacle() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.EAST,
+                new Obstacle(6, 5));
+
+        //Act
+        coordinates.moveForward();
+
+        //Assert
+        assertThat(coordinates.getY().getLocation()).isEqualTo(5);
+    }
+
+    @Test
+    public void shouldNotChangeXLocationWhenBackwardMovementIsBlockedByObstacle() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.NORTH,
+                new Obstacle(5, 4));
+
+        //Act
+        coordinates.moveBackward();
+
+        //Assert
+        assertThat(coordinates.getX().getLocation()).isEqualTo(5);
+    }
+
+    @Test
+    public void shouldNotChangeYLocationWhenBackwardMovementIsBlockedByObstacle() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(5, 5, Direction.NORTH,
+                new Obstacle(5, 4));
+
+        //Act
+        coordinates.moveBackward();
+
+        //Assert
+        assertThat(coordinates.getY().getLocation()).isEqualTo(5);
+    }
+
+    @Test
+    public void shouldFormatToStringWithLocationAndDirection() {
+        //Arrange
+        Coordinates coordinates = coordinatesAt(10, 20, Direction.SOUTH);
+
+        //Act
+        String result = coordinates.toString();
+
+        //Assert
+        assertThat(result).isEqualTo("10 X 20 S");
+    }
+
+    private Coordinates coordinatesAt(int x, int y, Direction direction) {
+        return coordinatesAt(x, y, direction, Collections.<Obstacle>emptyList());
+    }
+
+    private Coordinates coordinatesAt(int x, int y, Direction direction, Obstacle... obstacles) {
+        return coordinatesAt(x, y, direction, Arrays.asList(obstacles));
+    }
+
+    private Coordinates coordinatesAt(int x, int y, Direction direction, List<Obstacle> obstacles) {
+        Point xPoint = new Point(x, 99);
+        Point yPoint = new Point(y, 99);
+        return new Coordinates(xPoint, yPoint, direction, obstacles);
+    }
 }
