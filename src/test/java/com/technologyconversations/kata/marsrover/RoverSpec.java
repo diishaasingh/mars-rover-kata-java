@@ -76,7 +76,7 @@ public class RoverSpec {
     }
 
     @Test(expected = Exception.class)
-    public void shouldThrowExceptionForUnknownCommand() throws Exception {
+    public void shouldFailForUnknownCommand() throws Exception {
         Rover rover = new Rover(createCoordinates(1, 9, 2, 9, Direction.NORTH));
 
         rover.receiveSingleCommand('X');

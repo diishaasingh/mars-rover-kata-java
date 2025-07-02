@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CoordinatesSpec {
 
     @Test
-    public void shouldRetainXFromConstructor() {
+    public void shouldSetValueOfXPoint() {
         //Arrange
         Point x = new Point(1, 99);
         Point y = new Point(2, 99);
@@ -26,7 +26,7 @@ public class CoordinatesSpec {
     }
 
     @Test
-    public void shouldRetainYFromConstructor() {
+    public void shouldSetValueOfYPoint() {
         //Arrange
         Point x = new Point(1, 99);
         Point y = new Point(2, 99);
@@ -41,7 +41,7 @@ public class CoordinatesSpec {
     }
 
     @Test
-    public void shouldRetainDirectionFromConstructor() {
+    public void shouldSetValueOfDirection() {
         //Arrange
         Point x = new Point(1, 99);
         Point y = new Point(2, 99);
@@ -56,7 +56,7 @@ public class CoordinatesSpec {
     }
 
     @Test
-    public void shouldRetainObstaclesFromConstructor() {
+    public void shouldSetValueOfObstacles() {
         //Arrange
         Point x = new Point(1, 99);
         Point y = new Point(2, 99);
@@ -219,7 +219,7 @@ public class CoordinatesSpec {
     }
 
     @Test
-    public void shouldFormatToStringWithLocationAndDirection() {
+    public void shouldDisplayCoordinatesWithLocationAndDirection() { //test name (shouldFormatToStringWithLocationAndDirection)
         //Arrange
         Coordinates coordinates = coordinatesAt(10, 20, Direction.SOUTH);
 

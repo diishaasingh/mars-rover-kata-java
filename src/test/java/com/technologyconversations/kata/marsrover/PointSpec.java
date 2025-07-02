@@ -12,7 +12,7 @@ If maximum location is reached, forward/backward methods wrap location.
 */
 public class PointSpec {
     @Test
-    public void shouldRetainLocationFromConstructor() {
+    public void shouldSetLocation() {
         //Arrange
         int location = 5;
         int maxLocation = 9;
@@ -25,7 +25,7 @@ public class PointSpec {
     }
 
     @Test
-    public void shouldRetainMaxLocationFromConstructor() {
+    public void shouldSetMaxLocation() {
         //Arrange
         int location = 5;
         int maxLocation = 9;
@@ -38,7 +38,7 @@ public class PointSpec {
     }
 
     @Test
-    public void shouldReturnLocationPlusOneForForwardLocation() {
+    public void shouldForwardLocation() {
         //Arrange
         Point point = pointAt(5, 9);
 
@@ -50,7 +50,7 @@ public class PointSpec {
     }
 
     @Test
-    public void shouldReturnLocationMinusOneForBackwardLocation() {
+    public void shouldBackwardLocation() {
         //Arrange
         Point point = pointAt(5, 9);
 
