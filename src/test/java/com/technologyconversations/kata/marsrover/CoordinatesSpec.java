@@ -219,7 +219,7 @@ public class CoordinatesSpec {
     }
 
     @Test
-    public void shouldDisplayCoordinatesWithLocationAndDirection() { //test name (shouldFormatToStringWithLocationAndDirection)
+    public void shouldDisplayCoordinatesWithLocationAndDirection() { //test name (shouldFormatToStringWithLocationAndDirection): format sounds more technical
         //Arrange
         Coordinates coordinates = coordinatesAt(10, 20, Direction.SOUTH);
 

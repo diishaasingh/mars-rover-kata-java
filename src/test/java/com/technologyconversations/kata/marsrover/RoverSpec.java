@@ -83,7 +83,7 @@ public class RoverSpec {
     }
 
     @Test
-    public void shouldProcessMultipleCommands() throws Exception {
+    public void ShouldBeAbleToReceiveAndProcessMultipleCommands() throws Exception {
         Rover rover = new Rover(createCoordinates(1, 9, 2, 9, Direction.NORTH));
         rover.receiveCommands("RFR");
 
@@ -106,11 +106,11 @@ public class RoverSpec {
 
         rover.receiveCommands("FFFRF");
 
-        assertThat(rover.getCoordinates().getDirection()).isEqualTo(Direction.EAST);
+        assertThat(rover.getCoordinates().getX().getLocation()).isEqualTo(2);
     }
 
     @Test
-    public void shouldReturnCorrectPosition() throws Exception {
+    public void shouldReturnXYAndDirectionFrmPosition() throws Exception {
         Rover rover = new Rover(createCoordinates(1, 9, 2, 9, Direction.NORTH));
 
         rover.receiveCommands("LFFFRFF");

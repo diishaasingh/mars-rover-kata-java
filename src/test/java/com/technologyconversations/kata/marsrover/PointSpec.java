@@ -38,7 +38,7 @@ public class PointSpec {
     }
 
     @Test
-    public void shouldForwardLocation() {
+    public void shouldIncreasePointValueByOneWhenForwardLocation() {
         //Arrange
         Point point = pointAt(5, 9);
 
@@ -50,7 +50,7 @@ public class PointSpec {
     }
 
     @Test
-    public void shouldBackwardLocation() {
+    public void shouldDecreasePointValueByOneWhenBackwardLocation() {
         //Arrange
         Point point = pointAt(5, 9);
 
